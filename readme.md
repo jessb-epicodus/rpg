@@ -11,9 +11,12 @@
 * CSS
 * Bootstrap
 * JavaScript
-* JQuery
+* jQuery
 * node
 * webpack
+* ESLint
+* Babel
+* Popper.js
 * Jest
 
 ## Description

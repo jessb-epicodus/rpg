@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode=development",
+    "build": "webpack --mode development",
     "start": "npm run build & webpack-dev-server --open --mode development",
-    "lint": "eslint src/*.js",
+    "lint": "eslint src/js/*.js",
     "test": "jest --coverage"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.16.0",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.5.1",
+    "dotenv-webpack": "^7.1.0",
     "eslint": "^8.2.0",
     "eslint-webpack-plugin": "^3.1.1",
     "html-webpack-plugin": "^5.5.0",
