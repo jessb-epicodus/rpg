@@ -1,6 +1,6 @@
 # _TITLE_
 
-#### By _**Jessica Baker**_ 
+#### By _**Jessi B**_ 
 
 #### _Lesson/ProjectName_
 
@@ -37,9 +37,9 @@ DESCRIBE
 
 ## License
 
-Copyright (c) _Jan 2022_ _Jessica Baker_
+Copyright (c) _Jan 2022_ _Jessi B_
 
 ## Contact
 
 _If you run into any issues or have questions, ideas or concerns or wish to make a contribution to the code see contact information below._
-* Jessica Baker: jessb.epicodus@gmail.com
+* Jessi B: jessb.epicodus@gmail.com
