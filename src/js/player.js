@@ -43,12 +43,16 @@ const storeState = () => {
 const player1 = storeState();
 const player2 = storeState();
 
+// Math.floor((Math.random() * 8) + 1)
+
+const p1Damage = changeState("HP");
+const p2Damage = changeState("HP");
 const heal = changeState("HP")(+5);
 const superHeal = changeState("HP")(+10);
 
 $(document).ready(function() {
   $('#p1-combat').click(function() {
-    const newState = player2(changeState("HP")(Math.floor((Math.random() * -8) - 1)));
+    const newState = player2((p2Damage)(Math.floor((Math.random() * -8) - 1)));
     $('#p2-health-value').text(`Health: ${newState.HP}`);
   });
   $('#p1-heal').click(function() {
@@ -60,7 +64,7 @@ $(document).ready(function() {
     $('#p1-health-value').text(`Health: ${newState.HP}`);
   });
   $('#p2-combat').click(function() {
-    const newState = player1(changeState("HP")(Math.floor((Math.random() * -8) - 1)));
+    const newState = player1((p1Damage)(Math.floor((Math.random() * -8) - 1)));
     $('#p1-health-value').text(`Health: ${newState.HP}`);
   });
   $('#p2-heal').click(function() {
