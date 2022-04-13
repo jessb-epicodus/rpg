@@ -1,6 +1,25 @@
 import $ from 'jquery';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/styles.css';
+
 ////  BUS. LOGIC  -------------------------------------
 // this function creates functions that alter the objects properties
+
+// const changeState = (property) => {
+//   return (value) => {
+//     return (state) => ({
+//       ...state,
+//       [property] : () => {
+//         (state[property] || 0) + value;
+//         if (state[property] > state[`Max${property}`]) {
+//           state[property] = state[`Max${property}`]
+//         }
+//       }
+//     });
+//   };
+// };
+
 const changeState = (property) => {
   return (value) => {
     return (state) => ({
@@ -12,7 +31,7 @@ const changeState = (property) => {
 
 // this function returns a snapshot of the object
 const storeState = () => {
-  let currentState = { HP: 100};
+  let currentState = { MaxHP: 100, HP: 100, Level : 1 };
   return (stateChangeFunction = state => state) => {
     const newState = stateChangeFunction(currentState);
     currentState = { ...newState};
@@ -24,14 +43,12 @@ const storeState = () => {
 const player1 = storeState();
 const player2 = storeState();
 
-const p1Damage = changeState("HP")(-5);
-const p2Damage = changeState("HP")(-5);
 const heal = changeState("HP")(+5);
 const superHeal = changeState("HP")(+10);
 
 $(document).ready(function() {
   $('#p1-combat').click(function() {
-    const newState = player2(p2Damage);
+    const newState = player2(changeState("HP")(Math.floor((Math.random() * -8) - 1)));
     $('#p2-health-value').text(`Health: ${newState.HP}`);
   });
   $('#p1-heal').click(function() {
@@ -42,9 +59,8 @@ $(document).ready(function() {
     const newState = player1(superHeal);
     $('#p1-health-value').text(`Health: ${newState.HP}`);
   });
-  
   $('#p2-combat').click(function() {
-    const newState = player1(p1Damage);
+    const newState = player1(changeState("HP")(Math.floor((Math.random() * -8) - 1)));
     $('#p1-health-value').text(`Health: ${newState.HP}`);
   });
   $('#p2-heal').click(function() {
@@ -56,15 +72,3 @@ $(document).ready(function() {
     $('#p2-health-value').text(`Health: ${newState.HP}`);
   });
 });
-
-
-
-/* 
-                                      (Prop)(Value)
-statecontrol = Storestate(ChangeState('Soil")(1))
-                          { return state object }
-              {return function= statechangeFunction}
-
-statecontrol() = Storestate(ChangeState('Soil")(1))
-                 {       Return  newState         }
-*/

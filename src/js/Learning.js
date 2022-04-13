@@ -1,11 +1,10 @@
 const storeState = () => { 
   console.log("State created.");
 
-  let currentState = {};
+  let currentState = {MaxHP:100, HP:100};
   return (stateChangeFunction = state => state) => { // FUNCTION 2
     console.log("STATE AS IT IS NOW: ", currentState);
-    // console.log((stateChangeFunction = state => state));
-    console.log(stateChangeFunction);
+    console.log(" >>>>>>>> " + stateChangeFunction);
     const newState = stateChangeFunction(currentState);
     currentState = {...newState};
     console.log("STATE AFTER POSSIBLE CHANGE: ", currentState);
@@ -22,6 +21,11 @@ const changeState = (prop) => {
   }
 }
 
+/*
+if (state[property] > state[`Max${property}`]) {
+  state[property] = state[`Max${property}`]
+}
+*/
 
 console.log("Creating state.");
 const Plant = storeState();
@@ -44,33 +48,33 @@ const newState2 = Plant(blueFood);
 
 Creating state.
 plant.js:2 State created.
-plant.js:29 A
+plant.js:28 A
 plant.js:6 STATE AS IT IS NOW:  {}
-plant.js:8 (state) => ({
+plant.js:7  >>>>>>>> (state) => ({
       ...state,
       [prop] : (state[prop] || 0) + value
     })
-plant.js:11 STATE AFTER POSSIBLE CHANGE:  {ding dongs: 100}
-plant.js:31 B
-plant.js:33 C
+plant.js:10 STATE AFTER POSSIBLE CHANGE:  {ding dongs: 100}
+plant.js:30 B
+plant.js:32 C
 plant.js:6 STATE AS IT IS NOW:  {ding dongs: 100}
-plant.js:8 (state) => ({
+plant.js:7  >>>>>>>> (state) => ({
       ...state,
       [prop] : (state[prop] || 0) + value
     })
-plant.js:11 STATE AFTER POSSIBLE CHANGE:  {ding dongs: 100, soil: 5}
-plant.js:35 D
-plant.js:36 GETTING STATE SNAP SHOT
+plant.js:10 STATE AFTER POSSIBLE CHANGE:  {ding dongs: 100, soil: 5}
+plant.js:34 D
+plant.js:35 GETTING STATE SNAP SHOT
 plant.js:6 STATE AS IT IS NOW:  {ding dongs: 100, soil: 5}
-plant.js:8 state => state
-plant.js:11 STATE AFTER POSSIBLE CHANGE:  {ding dongs: 100, soil: 5}
-plant.js:38 State Snap Shot:  {ding dongs: 100, soil: 5}
-plant.js:39 E
+plant.js:7  >>>>>>>> state => state
+plant.js:10 STATE AFTER POSSIBLE CHANGE:  {ding dongs: 100, soil: 5}
+plant.js:37 State Snap Shot:  {ding dongs: 100, soil: 5}
+plant.js:38 E
 plant.js:6 STATE AS IT IS NOW:  {ding dongs: 100, soil: 5}
-plant.js:8 (state) => ({
+plant.js:7  >>>>>>>> (state) => ({
       ...state,
       [prop] : (state[prop] || 0) + value
     })
-plant.js:11 STATE AFTER POSSIBLE CHANGE:  {ding dongs: 100, soil: 10}
+plant.js:10 STATE AFTER POSSIBLE CHANGE:  {ding dongs: 100, soil: 10}
 
 */
