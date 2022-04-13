@@ -1,5 +1,5 @@
 import $ from 'jquery';
-//// BL
+////  BUS. LOGIC  -------------------------------------
 // this function creates functions that alter the objects properties
 const changeState = (property) => {
   return (value) => {
@@ -12,7 +12,7 @@ const changeState = (property) => {
 
 // this function returns a snapshot of the object
 const storeState = () => {
-  let currentState = {};
+  let currentState = { HP: 100};
   return (stateChangeFunction = state => state) => {
     const newState = stateChangeFunction(currentState);
     currentState = { ...newState};
@@ -20,22 +20,15 @@ const storeState = () => {
   };
 };
 
+////  USER LOGIC  -------------------------------------
 const player1 = storeState();
 const player2 = storeState();
 
-// let characters = [];
-// characters.push(storeState());
-
-// const combatWinner = changeState("experience")(5);
-// const p1HP = changeState("HP")(20);
-// const p2HP = changeState("HP")(20);
 const p1Damage = changeState("HP")(-5);
 const p2Damage = changeState("HP")(-5);
-// const combatLoser = changeState("experience")(1);
 const heal = changeState("HP")(+5);
 const superHeal = changeState("HP")(+10);
-// const p1Attack = changeState("experience")(5)
-//// UL
+
 $(document).ready(function() {
   $('#p1-combat').click(function() {
     const newState = player2(p2Damage);
