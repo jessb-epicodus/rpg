@@ -22,7 +22,7 @@ const changeState = (property) => {
 
 // this function returns a snapshot of the object
 const storeState = () => {
-  let currentState = { MaxHP : 100, HP : 100, Level : 1 };
+  let currentState = { MaxHP : 5, HP : 5, Level : 1 };
   return (stateChangeFunction = state => state) => {
     const newState = stateChangeFunction(currentState);
     currentState = { ...newState};
@@ -41,6 +41,7 @@ const p2Damage = changeState("HP");
 const heal = changeState("HP")(+5);
 const superHeal = changeState("HP")(+10);
 const playerTurn = buttonFlip();
+const winning = playerWins();
 
 function buttonFlip() {
   let turnCounter = 0;
@@ -64,11 +65,21 @@ function buttonFlip() {
   };
 }
 
+function playerWins() {
+  return () => {
+    if (player1().HP === 0 || player2().HP === 0) {
+      $("#hide").show();
+      $("#the-game").hide();
+    }
+  };
+}
+
 $(document).ready(function() {
   $('#p1-combat').click(function() {
     const newState = player2((p2Damage)(Math.floor((Math.random() * -8) - 1)));
     $('#p2-health-value').text(`Health: ${newState.HP}`);
     playerTurn();
+    winning();
   });
 
   $('#p1-heal').click(function() {
@@ -87,6 +98,7 @@ $(document).ready(function() {
     const newState = player1((p1Damage)(Math.floor((Math.random() * -8) - 1)));
     $('#p1-health-value').text(`Health: ${newState.HP}`);
     playerTurn();
+    winning();
   });
 
   $('#p2-heal').click(function() {
