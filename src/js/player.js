@@ -24,14 +24,21 @@ const changeState = (property) => {
   return (value) => {
     return (state) => ({
       ...state,
-      [property] : (state[property] || 0) + value
+      // [property] : (state[property] || 0) + value
+      // [property] : (state[property] > 100 ? state[property] = 100 : state[property] ) + value
+      [property] : (state[property] + value) > 100 ? state[property] = 100 : state[property] + value 
     });
   };
 };
 
+//  [property] : (Math.min((state[property] + value), 100);
+
+// changestate("hp")(5)
+//condition ? exprIfTrue : exprIfFalse
+
 // this function returns a snapshot of the object
 const storeState = () => {
-  let currentState = { MaxHP: 100, HP: 100, Level : 1 };
+  let currentState = { HP: 100, Level : 1 };
   return (stateChangeFunction = state => state) => {
     const newState = stateChangeFunction(currentState);
     currentState = { ...newState};
@@ -43,8 +50,6 @@ const storeState = () => {
 const player1 = storeState();
 const player2 = storeState();
 
-// Math.floor((Math.random() * 8) + 1)
-
 const p1Damage = changeState("HP");
 const p2Damage = changeState("HP");
 const heal = changeState("HP")(+5);
@@ -55,24 +60,30 @@ $(document).ready(function() {
     const newState = player2((p2Damage)(Math.floor((Math.random() * -8) - 1)));
     $('#p2-health-value').text(`Health: ${newState.HP}`);
   });
+
   $('#p1-heal').click(function() {
     const newState = player1(heal);
     $('#p1-health-value').text(`Health: ${newState.HP}`);
   });
+
   $('#p1-superHeal').click(function() {
     const newState = player1(superHeal);
     $('#p1-health-value').text(`Health: ${newState.HP}`);
   });
+
   $('#p2-combat').click(function() {
     const newState = player1((p1Damage)(Math.floor((Math.random() * -8) - 1)));
     $('#p1-health-value').text(`Health: ${newState.HP}`);
   });
+
   $('#p2-heal').click(function() {
     const newState = player2(heal);
     $('#p2-health-value').text(`Health: ${newState.HP}`);
   });
+
   $('#p2-superHeal').click(function() {
     const newState = player2(superHeal);
     $('#p2-health-value').text(`Health: ${newState.HP}`);
   });
+
 });
