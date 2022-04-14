@@ -18,21 +18,6 @@ const changeState = (property) => {
   };
 };
 
-// (state[property] + value) > state[`Max${property}`] 
-// ? 
-// state[property] = state[`Max${property}`] 
-// : 
-// (
-//   (state[property] + value) <= 0 
-//   ? 
-//   state[property] = 0
-//   : 
-//   (state[property] || 0) + value
-// )
-
-
-
-
 //  [property] : (Math.min((state[property] + value), 100);
 
 // this function returns a snapshot of the object
@@ -49,40 +34,71 @@ const storeState = () => {
 const player1 = storeState();
 const player2 = storeState();
 
+// const p1Level = changeState("Level");
+// const p2Level = changeState("Level");
 const p1Damage = changeState("HP");
 const p2Damage = changeState("HP");
 const heal = changeState("HP")(+5);
 const superHeal = changeState("HP")(+10);
+const playerTurn = buttonFlip();
+
+function buttonFlip() {
+  let turnCounter = 0;
+  return () => {
+    turnCounter++;
+    if (turnCounter % 2 === 0) {
+      document.getElementById("p2-combat").disabled = true;
+      document.getElementById("p2-heal").disabled = true;
+      document.getElementById("p2-superHeal").disabled = true;
+      document.getElementById("p1-combat").disabled = false;
+      document.getElementById("p1-heal").disabled = false;
+      document.getElementById("p1-superHeal").disabled = false;
+    } else {
+      document.getElementById("p1-combat").disabled = true;
+      document.getElementById("p1-heal").disabled = true;
+      document.getElementById("p1-superHeal").disabled = true;
+      document.getElementById("p2-combat").disabled = false;
+      document.getElementById("p2-heal").disabled = false;
+      document.getElementById("p2-superHeal").disabled = false;
+    }
+  };
+}
 
 $(document).ready(function() {
   $('#p1-combat').click(function() {
     const newState = player2((p2Damage)(Math.floor((Math.random() * -8) - 1)));
     $('#p2-health-value').text(`Health: ${newState.HP}`);
+    playerTurn();
   });
 
   $('#p1-heal').click(function() {
     const newState = player1(heal);
     $('#p1-health-value').text(`Health: ${newState.HP}`);
+    playerTurn();
   });
 
   $('#p1-superHeal').click(function() {
     const newState = player1(superHeal);
     $('#p1-health-value').text(`Health: ${newState.HP}`);
+    playerTurn();
   });
 
   $('#p2-combat').click(function() {
     const newState = player1((p1Damage)(Math.floor((Math.random() * -8) - 1)));
     $('#p1-health-value').text(`Health: ${newState.HP}`);
+    playerTurn();
   });
 
   $('#p2-heal').click(function() {
     const newState = player2(heal);
     $('#p2-health-value').text(`Health: ${newState.HP}`);
+    playerTurn();
   });
 
   $('#p2-superHeal').click(function() {
     const newState = player2(superHeal);
     $('#p2-health-value').text(`Health: ${newState.HP}`);
+    playerTurn();
   });
 
 });
