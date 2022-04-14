@@ -12,16 +12,32 @@ const changeState = (property) => {
       ...state,
       // [property] : (state[property] || 0) + value // ex default
       //condition ? exprIfTrue : exprIfFalse
-      [property] : (state[property] + value) > state[`Max${property}`] ? state[property] = state[`Max${property}`] : (state[property] || 0) + value
+      // [property] : (state[property] + value) > state[`Max${property}`] ? state[property] = state[`Max${property}`] : (state[property] || 0) + value
+      [property] : (state[property] + value) > state[`Max${property}`] ? state[property] = state[`Max${property}`] : ((state[property] + value) <= 0 ? state[property] = 0 : (state[property] || 0) + value)
     });
   };
 };
+
+// (state[property] + value) > state[`Max${property}`] 
+// ? 
+// state[property] = state[`Max${property}`] 
+// : 
+// (
+//   (state[property] + value) <= 0 
+//   ? 
+//   state[property] = 0
+//   : 
+//   (state[property] || 0) + value
+// )
+
+
+
 
 //  [property] : (Math.min((state[property] + value), 100);
 
 // this function returns a snapshot of the object
 const storeState = () => {
-  let currentState = { MaxHP : 90, HP : 100, Level : 1 };
+  let currentState = { MaxHP : 100, HP : 100, Level : 1 };
   return (stateChangeFunction = state => state) => {
     const newState = stateChangeFunction(currentState);
     currentState = { ...newState};
