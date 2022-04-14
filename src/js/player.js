@@ -6,39 +6,22 @@ import '../css/styles.css';
 ////  BUS. LOGIC  -------------------------------------
 // this function creates functions that alter the objects properties
 
-// const changeState = (property) => {
-//   return (value) => {
-//     return (state) => ({
-//       ...state,
-//       [property] : () => {
-//         (state[property] || 0) + value;
-//         if (state[property] > state[`Max${property}`]) {
-//           state[property] = state[`Max${property}`]
-//         }
-//       }
-//     });
-//   };
-// };
-
 const changeState = (property) => {
   return (value) => {
     return (state) => ({
       ...state,
-      // [property] : (state[property] || 0) + value
-      // [property] : (state[property] > 100 ? state[property] = 100 : state[property] ) + value
-      [property] : (state[property] + value) > 100 ? state[property] = 100 : state[property] + value 
+      // [property] : (state[property] || 0) + value // ex default
+      //condition ? exprIfTrue : exprIfFalse
+      [property] : (state[property] + value) > state[`Max${property}`] ? state[property] = state[`Max${property}`] : (state[property] || 0) + value
     });
   };
 };
 
 //  [property] : (Math.min((state[property] + value), 100);
 
-// changestate("hp")(5)
-//condition ? exprIfTrue : exprIfFalse
-
 // this function returns a snapshot of the object
 const storeState = () => {
-  let currentState = { HP: 100, Level : 1 };
+  let currentState = { MaxHP : 90, HP : 100, Level : 1 };
   return (stateChangeFunction = state => state) => {
     const newState = stateChangeFunction(currentState);
     currentState = { ...newState};
